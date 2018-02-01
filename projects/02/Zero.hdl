@@ -1,0 +1,11 @@
+CHIP Zero {
+    IN  
+        in;
+
+    OUT 
+        out;
+
+    PARTS:
+    
+    out = false;
+}

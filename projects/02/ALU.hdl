@@ -62,12 +62,11 @@ CHIP ALU {
     Mux16(a = andxy, b = addxy, sel = f, out = fxy);
 
     Not16(in = fxy, out = nfxy);
-    Mux16(a = fxy, b = nfxy, sel = no, out = out);
+    Mux16(a = fxy, b = nfxy, sel = no, out[15] = ng, out[0..7] = half1, out[8..15] = half2, out = out);
 
-    // not sure how to do the zr and ng outputs
-    Mux16(a = fxy, b = nfxy, sel = no, out = tempout);
-    Mux(a = true, b = false, sel = false, out = zr);
-    Mux(a = true, b = false, sel = false, out = ng);
-
+    Or8Way(in = half1, out = half1zero);
+    Or8Way(in = half2, out = half2zero);
+    Or(a = half1zero, b = half2zero, out = combinedzero);
+    Not(in = combinedzero, out = zr);
 
 }
